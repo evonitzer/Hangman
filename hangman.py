@@ -1,23 +1,56 @@
 # Game of Hangman.  First, get the logic.  Next, build a text
 # file with a number of words that can be randomly chosen.
 
-import sys
+word = '' # secret word
+display_word = '' # word to display
+num_wrong = 0 # number of wrong guesses
+guessed = [] # list of guessed letters
+board = ['  ______', '  |    |', '  |', '  |', '  |', 
+          '  |', '  |', '  |', '__|__', '|___|']
+loserbrd = ['  |    O', '  |    |', '  |   ~|', '  |   ~|~', 
+          '  |    ^',  '  |   ~|~    YOU LOSE!']
+game_over = False
 
-def guess_letter(word):
-  letter = raw_input("Guess a letter!")
-  data = []
-  if letter in word:
-    data[0] = True
+def guess_letter():
+  global game_over
+  global guessed
+  global num_wrong 
+
+  letter = raw_input("Guess a letter! ")
+
+  if letter in guessed:
+    print "you already guessed that!"
+
+  elif len(letter) != 1:
+    print "that's not a letter"
+
   else:
-    data[0] = False
-  return
+    guessed.append(letter[0])
+    
+    updateDisplayWord()
 
-def draw_image(word):
-  
-  board = ['  ______', '  |    |', '  |', '  |', '  |', '  |', '  |',
-    '  |', '__|__', '|___|']
-  loserbrd = ['  |    O', '  |    |', '  |   ~|', '  |   ~|~', '  |    ^', 
-    '  |   ~|~    YOU LOSE!']
+    if letter in word:
+      print "guessed right!"
+
+    else:
+      num_wrong = num_wrong + 1
+      if num_wrong >= 5:
+        game_over = True
+
+def updateDisplayWord():
+  global display_word
+  display_word = ''
+
+  for letter in word:
+    if letter in guessed:
+      display_word += letter
+    else:
+      display_word += '_'
+
+def draw_image():
+  global board
+  global loserbrd
+
   if num_wrong >= 1:
     board[2] = loserbrd[0]
   if num_wrong >= 2:
@@ -29,28 +62,22 @@ def draw_image(word):
   if num_wrong >= 5:
     board[4] = loserbrd[4]
     board[3] = loserbrd[5]
-    game_over=True
-  
-  print '\n\n\n\n'
-  for n in range(len(word)):
-    sys.stdout.write('_ ')
-  print '\n\n'
+
   for n in range(10):
     print board[n]
-    
-  guess_letter(word)
-  
+
+  global display_word
+  print display_word
 
 def pick_word():
-  return raw_input("Please enter a word:")
+  return raw_input("Please enter a word: ")
 
 def main():
+  global word
   word = pick_word()
-  draw_image(word)
-  
-  
-  
-  
+  while game_over == False:
+    guess_letter()
+    draw_image()
 
 if __name__ == '__main__':
   main()
