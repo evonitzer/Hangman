@@ -1,20 +1,21 @@
 # Game of Hangman.  First, get the logic.  Next, build a text
 # file with a number of words that can be randomly chosen.
+# a bit of nothing here to change the file.
 
 word = '' # secret word
 display_word = '' # word to display
 num_wrong = 0 # number of wrong guesses
 guessed = [] # list of guessed letters
-board = ['  ______', '  |    |', '  |', '  |', '  |', 
+board = ['  ______', '  |    |', '  |', '  |', '  |',
           '  |', '  |', '  |', '__|__', '|___|']
-loserbrd = ['  |    O', '  |    |', '  |   ~|', '  |   ~|~', 
+loserbrd = ['  |    O', '  |    |', '  |   ~|', '  |   ~|~',
           '  |    ^',  '  |   ~|~    YOU LOSE!']
 game_over = False
 
 def guess_letter():
   global game_over
   global guessed
-  global num_wrong 
+  global num_wrong
 
   letter = raw_input("Guess a letter! ")
 
@@ -26,7 +27,7 @@ def guess_letter():
 
   else:
     guessed.append(letter[0])
-    
+
     updateDisplayWord()
 
     if letter in word:
