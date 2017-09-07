@@ -5,4 +5,6 @@ scan it to build a dictionary of words.
 When the game is started up, a random word will be chosen and the game can commence
 in single player mode.
 
-New information being thrown in just for fun.
+New information being thrown in just for fun
+
+More more more.
